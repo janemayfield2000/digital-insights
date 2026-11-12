@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Ahrefs Shows Zero Crawled Pages: A Troubleshooting Guide for Site Owners</title>
+  <meta name="description" content="Find out why Ahrefs shows zero crawled pages and learn how to troubleshoot robots.txt, firewall, CDN and crawler access issues.">
+  <meta name="robots" content="index, follow">
+  <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  <style>
+    html, body {
+      background-color: #000000;
+      color: #e0e0e0;
+      margin: 0;
+      min-height: 100%;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    article {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-top: 32px;
+      margin-bottom: 14px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 18px;
+    }
+    li {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    a {
+      color: #4da6ff;
+      text-decoration: underline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>Why Ahrefs Shows Zero Crawled Pages: A Troubleshooting Guide for Site Owners</h1>
+    <img src="https://jpcdn.it/img/small/05a5a262f8277d0a70cb942bf0e11cfc.png" alt="Why Ahrefs Shows Zero Crawled Pages: A Troubleshooting Guide for Site Owners">
+
+    <p>You set up a Site Audit, wait a few minutes and see a number that makes your stomach drop: zero pages crawled. Or maybe you notice that your site seems frozen in Ahrefs, with old backlink data and no sign of updates. It feels like something is badly broken, but the cause is usually small and fixable.</p>
+
+    <p>This guide walks through the most common reasons crawlers cannot reach a site and shows you how to solve them in a sensible order.</p>
+
+    <h2>First, Understand Who Is Crawling</h2>
+
+    <p>Ahrefs runs two crawlers, and the difference matters when you troubleshoot. AhrefsBot is the global crawler that builds the shared index behind Site Explorer and other tools. AhrefsSiteAudit is the audit crawler that runs when you start a Site Audit project. Each has its own user-agent, and each can be allowed or blocked separately. The <a href="https://seobotai.com/blog/ahrefs-bot/">AhrefsBot guide</a> explains the details.</p>
+
+    <p>Before you change anything, decide which crawler is affected. A problem with audits only often points to a different cause than a problem with the whole index.</p>
+
+    <h2>Cause One: Robots.txt Is Blocking the Bot</h2>
+
+    <p>This is the most common culprit. A rule that disallows AhrefsBot or AhrefsSiteAudit across the whole site stops crawling completely. The rule may have been added deliberately, copied from a template or left over from a development period. Open your robots.txt file in a browser and read it line by line.</p>
+
+    <p>The fix is simple: remove the disallow rule for the crawler, or replace it with an allow rule. If you only want to protect certain folders, restrict those folders instead of the entire domain.</p>
+
+    <h2>Cause Two: Robots.txt Itself Is Unstable</h2>
+
+    <p>Sometimes the rules are fine but the file is not. If robots.txt returns a server error, times out or loads very slowly, crawlers may treat that as a sign of instability and proceed with caution. In some cases they crawl far less than usual.</p>
+
+    <p>Make sure the file returns a normal response quickly. Do the same for your key pages. If your main URLs return 4xx or 5xx errors, no crawler can index them, no matter how friendly your rules are.</p>
+
+    <h2>Cause Three: Security Layers Are Blocking Requests</h2>
+
+    <p>Many sites are protected by several layers: security plugins, ModSecurity rules, hosting firewalls, and CDN or WAF services such as Cloudflare or Sucuri. These tools sometimes flag crawler IPs or user-agents as suspicious and return errors or challenges.</p>
+
+    <p>To check, look at your firewall logs for blocked requests that mention the crawler or come from the published Ahrefs IP ranges. Then whitelist the user-agent and the official ranges. If you use managed hosting and cannot edit these rules, contact support, explain the situation and ask them to follow the bot documentation from Ahrefs.</p>
+
+    <h2>A Quick Diagnostic Order</h2>
+
+    <p>When you are not sure where to begin, work through the checks in this sequence:</p>
+
+    <ol>
+      <li>Read your robots.txt and look for disallow rules that target Ahrefs crawlers.</li>
+      <li>Confirm that robots.txt returns a fast, normal response.</li>
+      <li>Confirm that your main pages return normal responses.</li>
+      <li>Review firewall, plugin and CDN logs for blocked requests.</li>
+      <li>Whitelist the verified Ahrefs ranges and user-agents.</li>
+      <li>Wait for the next scheduled crawl or restart the audit.</li>
+    </ol>
+
+    <p>This order moves from the cheapest, most likely fixes to the most technical ones, so you rarely need to reach the final steps.</p>
+
+    <h2>Beware of Fake Traffic While You Investigate</h2>
+
+    <p>While reading logs, you may see plenty of requests that claim to be AhrefsBot. Not all of them are real. User-agents are easy to fake, so verify suspicious entries with reverse DNS and confirm the hostname ends with ahrefs.com or ahrefs.net. Whitelist only addresses that pass the check. Treat everything else like any other unknown bot.</p>
+
+    <h2>When the Server Is Simply Struggling</h2>
+
+    <p>If your server is overloaded, crawlers may receive errors and slow down on their own. That protects you in the short term, but it is not a real solution, because those same errors also hurt visitors and other bots such as Googlebot.</p>
+
+    <p>A better approach is to address the root cause, such as hosting capacity or heavy pages, and use Crawl-delay if you need to reduce crawl pressure. For audits specifically, verified owners can lower the crawl speed inside the tool without blocking anything.</p>
+
+    <h2>Should You Be Using Ahrefs at All?</h2>
+
+    <p>Troubleshooting is a good moment to ask whether the tool fits your needs. Ahrefs is a powerful platform, but it comes with a learning curve and a high price. The <a href="https://seobotai.com/blog/ahrefs-vs-kwfinder-comparison/">Ahrefs vs KWFinder comparison</a> explains that a simpler tool can handle basic keyword research for much less money, while Ahrefs is better suited to teams that need deep backlink and audit data.</p>
+
+    <p>If your main goal is keyword ideas, you may not need audits and crawler access at all.</p>
+
+    <h2>The Bottom Line</h2>
+
+    <p>Zero crawled pages looks dramatic, but the causes are almost always ordinary: a stray disallow rule, an unstable robots.txt file or an overzealous firewall. Work through the checks in order, verify real traffic from fake and keep your rules simple. In most cases, crawling resumes on the next pass.</p>
+  </article>
+</body>
+</html>
